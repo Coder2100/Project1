@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block title %}{% endblock %}
+<!-- start of the body -->
+{% block body %}
+<style>
+    .container {
+      color:white;
+    }
+    a{
+  text-decoration: white;
+  color: white;
+}
+</style>
+<br><br><br>
+<h4 style="text-align:center;">All Books | Browse To Find Your Favorate!</h4>
+<div class="container">
+
+        {% for book in books %}
+      <div class='container bg-info my-2'>
+        <a href="{{ url_for('book',isbn=book.isbn) }}">
+       <p>Title: {{ book.title }}</p>
+       <p><i>Author: {{ book.author }}</i></p> 
+       <p><i>isbn: {{ book.isbn }}</i></p>  </a> <hr>
+      </div>
+        {% endfor %}
+    
+</div>
+{% endblock %}

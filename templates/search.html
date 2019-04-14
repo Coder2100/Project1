@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Booklyk 
+{% endblock %}
+
+{% block body %}
+<br><br><br>
+<br><br><br><br><br><br>
+<h1>Search Results!</h1>
+<link rel="stylesheet" href="{{ url_for('static', filename='styling2.css') }}">
+<!-- Enabling search results-->
+<div class="container ">
+    <h3>{{ NotFound }}</h3>
+        <div class="book">
+                {% for search in results %}
+            <a href='/isbn/{{ search.isbn}}'>
+                <p>Author: {{ search.author }} </p> 
+                <p>Year: {{ search.year }}</p>
+                <p>Title: {{ search.title}}</p>
+                <p>ISBN: {{ search.isbn}}</p> 
+            </a>
+                {% endfor %}
+         </div>
+ </div>
+   
+{% endblock %}

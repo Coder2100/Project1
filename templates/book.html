@@ -1,0 +1,100 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Booklyk 
+{% endblock %}
+
+
+{% block body %}
+
+
+
+<style>
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+}
+.container > div {
+    background-color: springgreen;
+    font-size: 17px;
+    margin: 20px;
+    padding: 20px;
+    width: 400px;
+    border:1px solid black;
+}
+textarea{
+  width: 100%;
+  padding: 3px;
+  height: 200px;
+}
+.button{
+    width: 50%;
+    background-color: black;
+    color: white;
+    height: 50px;
+}
+.button:hover{
+    background-color: red;
+    color: black;
+    transition: 0s;
+}
+.welcome{
+    text-align: center;
+}
+a{
+  text-decoration:black;
+  color:black;
+  font-weight: bolder
+}
+.book{
+    background-color: blue;
+}
+</style>
+<br><br><br>
+<h1 class="welcome">Welcome Home, {{ session.name }}!</h1>
+<h2 class="container">Review your favorate book below!</h2>
+<br>
+<div class="container">
+        <div class="book">
+            <p>Title: {{book.title}}</p>
+            <p>Author:  {{ book.author }}</p> 
+            <p>Year: {{ book.year }}</p>
+            <p>ISBN: {{ book.isbn }}</p> 
+            <p>Total Reviews: {{ work_ratings_count }}</p>
+            <p>Average Review: {{ average_rating}} out of 5</p><hr>
+            <p> <a href="{{ url_for('api', isbn=book.isbn) }}">API</a></p><hr>
+            {% if reviews  !=0  %}
+           
+            <div class="container bg-primary" style="color:white"><small>Reviews by <b>Booklyk</b> users.</small></div><br><hr>
+            {% for x in reviews %}
+            <div class='container bg-light my-3'><br>
+                <p>Rating: {{x.rating}} out of 5</p>
+                
+              <blockquote>Message: {{x.message}}</blockquote>
+                <small class="text-info">reviewed by {{ x.name }} on the {{ x.review_date}} </small>
+            </div>
+            {% endfor %}
+            {% endif %}
+         
+            <form action="{{url_for('book',isbn=book.isbn)}}" method="POST">
+            <p>
+                <select class="form-control" name="rating">
+                    <option selected value disabled> -- select rating -- </option>
+                    <option value="5">5 Stars</option>
+                    <option value="4">4 Stars</option>
+                    <option value="3">3 Stars</option>
+                    <option value="2">2 Stars</option>
+                    <option value="1">1 Star</option>
+                </select>
+            </p>
+            <p>
+            <textarea  name="message" placeholder="Leave a review" required autofocus></textarea> 
+             </p>
+             <p><button class="button" type="submit"><b>Submit Review</b></button></p>
+             </form>
+    
+        </div>
+    </div>
+  
+{% endblock %}

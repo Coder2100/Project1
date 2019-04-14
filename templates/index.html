@@ -1,0 +1,112 @@
+{% extends "layout.html"%}
+
+{% block body%}
+<style>
+ 
+  #headerWrapper{
+    background-image: url('static/images/header.jpg');
+    position: relative;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    height: 700px;
+    background-repeat: no-repeat;
+    background-size: 100% 700px;
+    background-position: top center;
+    background-attachment: fixed;
+
+  }
+  .museums{
+    color:white;
+    text-align: center;
+    background-color: black;
+  }
+  img{
+    width: 100%;
+    height: 700px;
+
+  }
+  .footer{
+  background-image:linear-gradient(to bottom right, Tomato, Violet);
+  color:white;
+  text-align: center;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100px;
+}
+  </style>
+<div class="pageWrapper">
+<!-- Creating an image header/ jumbotron-->
+<div id="headerWrapper">
+  <div id="branding">
+    <h1><b><font size="9">CS50</font></b></h1>
+  </div>
+  <!-- Display text message on the header of the homepage-->
+  <div class="container" id="headerMessage">
+    <h1>CS50W Web Programming with Python & JavaScript</h1>
+    <p>Project1: In this project, you’ll build a book review website. Users will be able to register for your website and then log in using their username and password. Once they log in, they will be able to search for books, leave reviews for individual books, and see the reviews made by other people. You’ll also use the a third-party API by Goodreads, another book review website, to pull in ratings from a broader audience. Finally, users will be able to query for book details and book reviews programmatically via your website’s API.</p>
+  </div>
+</div>
+<!-- Text descripton-->
+<br>
+<div class="container-fluid">
+  <h1 class="museums">Most recent published books fresh from the print !</h1>
+</div>
+<br>
+
+<!-- Recent reviews session-->
+<div class="container-fluid" id="reviewSession">
+    <div class="row">
+        {% for book in books %}
+      <div class="col">
+        <h4>Author: {{ book.author }}</h4>
+        <h4>Title: {{ book.title }}</br> Published: {{ book.year }} </br>Rating:4.5 Star</h4>
+      </div>
+        {% endfor %}
+    </div>
+    <br><br><br>
+    <div class="row">
+      <div class="col">
+    <img src="static/images/george.png" alt="Book Cover By George Saunders" >
+  </div>
+  <div class="col">
+      <img src="static/images/sara.jpg" alt="Book Cover By Sarah Pinborough" >
+    </div>
+    <div class="col">
+        <img src="static/images/stephie.jpeg" alt="Book Cover By Stephanie Garbe" >
+      </div>
+  </div>
+  <br><br><br>
+<div class="museums"><h1>The greatest of all times!</h1></div>
+<br><br><br>
+  <div class="row">
+      {% for x in old %}
+    <div class="col">
+      <h4>Author: {{ x.author }}</h4>
+      <h4>Title: {{ x.title }}</br> Published: {{ x.year }} </br>Rating:4.5 Star</h4>
+    
+    </div>
+      {% endfor %}
+  </div>
+  <br><br><br>
+
+<div class="row">
+      <div class="col">
+    <img src="static/images/as_like_it.jpg" alt="Book Cover By George Saunders">
+  </div>
+  <div class="col">
+      <img src="static/images/the-winter-s-tale.jpg" alt="Book Cover By Sarah Pinborough ">
+    </div>
+    <div class="col">
+        <img src="static/images/the-complete-works.jpg" alt="Book Cover By Stephanie Garbe ">
+      </div>
+  </div>
+</div>
+<br><br><br><br><br><br>
+  <!-- Footer-->
+  <div class="footer">
+      <p><font size="9"><b>&copy; CS50W Harvard 2019</b> </font></p>
+    </div>
+{% endblock%}
