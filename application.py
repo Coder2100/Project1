@@ -11,9 +11,10 @@ import requests, json
 
 
 app = Flask(__name__)
-
+engine = "postgres://obzimppmxvagjv:6a750aaf850171c69c54cd3b4b6623c5ec352299dfa8e16367a0507634cb195a@ec2-54-235-156-60.compute-1.amazonaws.com:5432/d58h5g292jours"
 # Check for environment variable
-if not os.getenv("DATABASE_URL"):
+
+if not os.getenv("DATABASE_UR"):
     raise RuntimeError("DATABASE_URL is not set")
 
 # Configure session to use filesystem
@@ -99,7 +100,7 @@ def index():
 def books():
     books = db.execute("SELECT * FROM books").fetchall()
     return render_template("books.html", books=books)
-    
+
 @app.route("/isbn/<string:isbn>", methods=["POST", "GET"])
 #decorator to check if the user is logged in
 @login_required
@@ -110,18 +111,18 @@ def book(isbn):
     if request.method == "POST":
         rating = request.form.get("rating")
         message = request.form.get("message")
-        
+
        # making sure that one review per book per user
-       
+
         if db.execute("SELECT * FROM reviews WHERE (isbn ='" + isbn + "') AND (name = '" + name + "')").first():
             flash("You can only leave one review per book,Please choose another book below!", "danger")
             return redirect(url_for("books"))
         else:
-             db.execute("INSERT INTO reviews (rating, message, isbn, name) VALUES (:rating, :message, :isbn, :name)", {"rating":rating, "message": message, "isbn":isbn, "name": name}) 
+             db.execute("INSERT INTO reviews (rating, message, isbn, name) VALUES (:rating, :message, :isbn, :name)", {"rating":rating, "message": message, "isbn":isbn, "name": name})
              db.commit()
              flash("Review submitted successfully, Check your dashboard for all your reviewed books!", "success")
         return redirect(url_for("books"))
-  
+
     # Fetch Goodreads data with API
     res = requests.get("https://www.goodreads.com/book/review_counts.json/", params={"key":"nyl5lAQETqTmqyKtHcULRA", "isbns": isbn})
     if res.status_code !=200:
@@ -152,7 +153,7 @@ def api(isbn):
     total_reviews = db.execute("SELECT  FROM reviews WHERE isbn =:isbn",{"isbn":isbn}).fetchall()
     if total_reviews is None:
         total
-        average_score  
+        average_score
     else:
         total = len(total_reviews)
         score = db.execute("SELECT  FROM reviews WHERE isbn =:isbn",{"isbn":isbn}).fetchall()
@@ -187,10 +188,5 @@ def dashboard():
     personalReviews = db.execute("SELECT * FROM reviews  WHERE name=:name ORDER BY review_date DESC", {"name":name}).fetchall()
     otherUsers_Reviews = db.execute("SELECT * FROM reviews WHERE name!=:name ORDER BY review_date DESC", {"name":name}).fetchall()
     recommended = db.execute("SELECT *  FROM books WHERE year>= 1599 AND year < 1872 ORDER BY year DESC LIMIT 6").fetchall()
-   
+
     return render_template("dashboard.html", personalReviews=personalReviews, book=book, otherUsers_Reviews =otherUsers_Reviews, recommended=recommended)
-
-    
-
-    
-
