@@ -2,5 +2,4 @@ flask
 flask_session
 psycopg2
 sqlalchemy
-sqlalchemy.orm
 functools
