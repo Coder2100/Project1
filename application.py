@@ -11,10 +11,10 @@ import requests, json
 
 
 app = Flask(__name__)
-engine = "postgres://obzimppmxvagjv:6a750aaf850171c69c54cd3b4b6623c5ec352299dfa8e16367a0507634cb195a@ec2-54-235-156-60.compute-1.amazonaws.com:5432/d58h5g292jours"
+#engine = "postgres://obzimppmxvagjv:6a750aaf850171c69c54cd3b4b6623c5ec352299dfa8e16367a0507634cb195a@ec2-54-235-156-60.compute-1.amazonaws.com:5432/d58h5g292jours"
 # Check for environment variable
 
-if not os.getenv("DATABASE_UR"):
+if not os.getenv("DATABASE_URL"):
     raise RuntimeError("DATABASE_URL is not set")
 
 # Configure session to use filesystem
