@@ -1,4 +1,6 @@
-Flask
-Flask-Session
+flask
+flask_session
 psycopg2
-SQLAlchemy
+sqlalchemy
+sqlalchemy.orm
+functools
